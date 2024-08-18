@@ -37,6 +37,7 @@ function App() {
       setLoading(false);
     } catch (err) {
       setAPIError(err.message);
+      setLoading(false);
     }
   };
 
@@ -46,11 +47,13 @@ function App() {
       setLoading(true);
       let response = await fetch(url);
       let data = await response.json();
+
       setWeather(data);
       setLoading(false);
     } catch (err) {
       console.log(err);
       setAPIError(err.message);
+      setLoading(false);
     }
   };
 
@@ -82,7 +85,7 @@ function App() {
             data-testid="loader"
           />
         </div>
-      ) : (
+      ) : apiError ? (
         <div className="container">
           <WeatherBox weather={weather} />
           <WeatherButton
@@ -91,6 +94,8 @@ function App() {
             selectedCity={city}
           />
         </div>
+      ) : (
+        apiError
       )}
     </div>
   );
