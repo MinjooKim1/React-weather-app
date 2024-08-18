@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import WeatherBox from "./component/WeatherBox";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,13 +18,14 @@ function App() {
   const [city, setCity] = useState(null);
   const [loading, setLoading] = useState(false);
   const [apiError, setAPIError] = useState("");
-  const getCurrentLocation = useCallback(() => {
+
+  const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
       getWeatherByCurrentLocation(lat, lon);
     });
-  }, []);
+  };
 
   const getWeatherByCurrentLocation = async (lat, lon) => {
     try {
@@ -36,6 +37,7 @@ function App() {
       setWeather(data);
       setLoading(false);
     } catch (err) {
+      console.log(err);
       setAPIError(err.message);
       setLoading(false);
     }
@@ -60,10 +62,12 @@ function App() {
   useEffect(() => {
     if (city == null) {
       getCurrentLocation();
+      setLoading(true);
     } else {
       getWeatherByCity();
+      setLoading(true);
     }
-  }, [city]);
+  }, [city, getCurrentLocation, getWeatherByCity]);
 
   const handleCityChange = (city) => {
     if (city === "current") {

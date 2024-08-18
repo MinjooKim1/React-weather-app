@@ -3,12 +3,11 @@ import { Button } from "react-bootstrap";
 
 const WeatherButton = ({ cities, handleCityChange, selectedCity }) => {
   console.log("cities", cities);
-  console.log("handle", handleCityChange);
-  console.log("select", selectedCity);
+
   return (
     <div className="button-wrap">
       <Button
-        variant={`${selectedCity == null ? "primary" : "warning"}`}
+        variant={`${selectedCity === null ? "primary" : "warning"}`}
         onClick={() => handleCityChange("current")}
       >
         Current Location
@@ -16,7 +15,7 @@ const WeatherButton = ({ cities, handleCityChange, selectedCity }) => {
 
       {cities.map((city) => (
         <Button
-          variant={`${selectedCity == city ? "primary" : "warning"}`}
+          variant={`${selectedCity === city ? "primary" : "warning"}`}
           onClick={() => handleCityChange(city)}
         >
           {city}
