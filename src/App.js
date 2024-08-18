@@ -60,7 +60,7 @@ function App() {
     } else {
       getWeatherByCity();
     }
-  }, [city, getCurrentLocation]);
+  }, [city]);
 
   const handleCityChange = (city) => {
     if (city === "current") {
